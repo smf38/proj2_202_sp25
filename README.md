@@ -21,7 +21,7 @@ If you skip this, your test files may not be synced correctly and your work may 
 In this assignment, you’ll build a linked list of structured data rows based on real-world climate data — specifically, CO₂-equivalent emissions from around the world. You’ll practice:
 
 - Using `@dataclass(frozen=True)` to define structured records  
-- Recursively building and filtering linked lists  
+- Recursively building and filtering linked lists using `Node` and `None`  
 - Reading and parsing multi-line CSV files  
 
 > ✅ **All functions in this assignment must be external functions** — do not define methods inside classes.
@@ -30,12 +30,14 @@ In this assignment, you’ll build a linked list of structured data rows based o
 
 ## ✅ Task 1: Define Your Linked List Structure
 
-You will be building a custom linked list of **rows** representing individual records in the CO₂ emissions dataset.
+You will be building a custom linked list of **rows**, where each **node** holds one row from the CO₂ emissions dataset.
 
 ### 🧩 Create the following:
 
 - A `Row` class to store one line of emissions data  
-- A `Node` class, to make a linkedlist where each `Node` contains a Row object
+- A `Node` class, where each node has:
+  - `first`: a `Row` object
+  - `rest`: either another `Node` or `None`  
 
 Each row of the CSV file includes the following fields:
 
@@ -62,13 +64,13 @@ You will need to convert string values into appropriate types (e.g., float or in
 ### 🔧 Write the following function:
 
 ```python
-read_csv_lines(filename: str) -> LinkedList
+read_csv_lines(filename: str) -> Optional[Node]
 ```
 
 - Uses the `csv.reader` class to load rows  
 - Validates the header row  
 - Converts each row into a `Row` object  
-- Builds and returns a linked list of all rows (in any order is fine)
+- Recursively builds and returns a linked list (chained `Node` objects ending in `None`)
 
 > 💡 We suggest writing a **helper function**:  
 > `def parse_row(fields: list[str]) -> Row`  
@@ -89,10 +91,10 @@ sys.setrecursionlimit(10_000)
 ### ✍️ Write:
 
 ```python
-listlen(data: LinkedList) -> int
+listlen(data: Optional[Node]) -> int
 ```
 
-This recursively returns the number of rows in the linked list.
+This recursively returns the number of nodes in the linked list.
 
 > ❗ Use external functions only — do not define `.length()` as a method.
 
@@ -106,11 +108,11 @@ You will build a generic recursive filter that supports multiple types of querie
 
 ```python
 filter_rows(
-    data: LinkedList,
+    data: Optional[Node],
     field_name: str,
     comparison: str,
     value: Union[str, float, int]
-) -> LinkedList
+) -> Optional[Node]
 ```
 
 - `field_name`: one of the CSV column names  
