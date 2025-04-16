@@ -36,8 +36,8 @@ You will be building a custom linked list of **rows**, where each **node** holds
 
 - A `Row` class to store one line of emissions data  
 - A `Node` class, where each node has:
-  - `first`: a `Row` object
-  - `rest`: either another `Node` or `None`  
+  - `value`: a `Row` object
+  - `next`: either another `Node` or `None`  
 
 Each row of the CSV file includes the following fields:
 
@@ -70,7 +70,7 @@ read_csv_lines(filename: str) -> Optional[Node]
 - Uses the `csv.reader` class to load rows  
 - Validates the header row  
 - Converts each row into a `Row` object  
-- Recursively builds and returns a linked list (chained `Node` objects ending in `None`)
+- Recursively builds and returns a linked list (`Node` → `Node` → `...` → `None`)
 
 > 💡 We suggest writing a **helper function**:  
 > `def parse_row(fields: list[str]) -> Row`  
@@ -94,7 +94,7 @@ sys.setrecursionlimit(10_000)
 listlen(data: Optional[Node]) -> int
 ```
 
-This recursively returns the number of nodes in the linked list.
+This recursively returns the number of rows in the linked list.
 
 > ❗ Use external functions only — do not define `.length()` as a method.
 
@@ -168,3 +168,5 @@ Push the following files to your GitHub Classroom repo:
 - `proj2.py` – your main implementation  
 - `test_student.py` – your test suite  
 - `sample.csv` – a small file for testing (optional but recommended)
+
+---
