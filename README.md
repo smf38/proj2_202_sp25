@@ -1,18 +1,9 @@
 ## 🌿 CSC 202 – Assignment 2: Linked Lists and Filtering CO₂ Emissions
 
----
+### Submission
 
-### 🚨 URGENT — GitHub Codespaces Users
+You will make your own fork of this repository and submit that public URL as your Project 2 submission.
 
-If you are using GitHub Codespaces:  
-**Immediately after cloning the repo, open the terminal and run:**
-
-```bash
-git pull --no-rebase
-```
-
-This is required due to a known **GitHub Classroom bug**.  
-If you skip this, your test files may not be synced correctly and your work may be misgraded.
 
 ---
 
