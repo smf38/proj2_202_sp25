@@ -66,5 +66,10 @@ def read_csv_lines(filename: str) -> Optional[Node]:
 
     return create_linked_list(1)
 
+def list_len(data: Optional[Node]) -> int:
+    if data is None:
+        return 0
+    else:
+        return 1 + list_len(data.next)
 
 # ...
