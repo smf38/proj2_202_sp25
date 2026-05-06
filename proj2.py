@@ -12,14 +12,14 @@ sys.setrecursionlimit(10_000)
 from dataclasses import dataclass
 @dataclass(frozen=True)
 class Row:
-    country: str
-    year: int
-    electricity_and_heat_co2_emissions: float
-    electricity_and_heat_co2_emissions_per_capita: float
-    energy_co2_emissions: float
-    energy_co2_emissions_per_capita: float
-    total_co2_emissions_excluding_lucf: float
-    total_co2_emissions_excluding_lucf_per_capita: float
+    country: Optional[str]
+    year: Optional[int]
+    electricity_and_heat_co2_emissions: Optional[float]
+    electricity_and_heat_co2_emissions_per_capita: Optional[float]
+    energy_co2_emissions: Optional[float]
+    energy_co2_emissions_per_capita: Optional[float]
+    total_co2_emissions_excluding_lucf: Optional[float]
+    total_co2_emissions_excluding_lucf_per_capita: Optional[float]
 
 @dataclass(frozen=True)
 class Node:
@@ -30,14 +30,20 @@ class Node:
 # Then your functions.
 def read_csv_lines(filename: str) -> Optional[Node]:
     def parse_row(fields: list[str]) -> Row:
+
+        def to_int(x: str) -> Optional[int]:
+            return None if x == "" else int(x)
+        def to_float(x: str) -> Optional[float]:
+            return None if x == "" else float(x)
+
         country = str(fields[0])
-        year =  int(fields[1])
-        electricity_and_heat_co2_emissions = float(fields[2])
-        electricity_and_heat_co2_emissions_per_capita = float(fields[3])
-        energy_co2_emissions = float(fields[4])
-        energy_co2_emissions_per_capita = float(fields[5])
-        total_co2_emissions_excluding_lucf =  float(fields[6])
-        total_co2_emissions_excluding_lucf_per_capita = float(fields[7])
+        year =  to_int(fields[1])
+        electricity_and_heat_co2_emissions = to_float(fields[2])
+        electricity_and_heat_co2_emissions_per_capita = to_float(fields[3])
+        energy_co2_emissions = to_float(fields[4])
+        energy_co2_emissions_per_capita = to_float(fields[5])
+        total_co2_emissions_excluding_lucf =  to_float(fields[6])
+        total_co2_emissions_excluding_lucf_per_capita = to_float(fields[7])
         return Row(country,
                     year,
                     electricity_and_heat_co2_emissions,
