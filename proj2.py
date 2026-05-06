@@ -28,30 +28,31 @@ class Node:
 # ...
 
 # Then your functions.
+def parse_row(fields: list[str]) -> Row:
+
+    def to_int(x: str) -> Optional[int]:
+        return None if x == "" else int(x)
+    def to_float(x: str) -> Optional[float]:
+        return None if x == "" else float(x)
+
+    country = str(fields[0])
+    year =  to_int(fields[1])
+    electricity_and_heat_co2_emissions = to_float(fields[2])
+    electricity_and_heat_co2_emissions_per_capita = to_float(fields[3])
+    energy_co2_emissions = to_float(fields[4])
+    energy_co2_emissions_per_capita = to_float(fields[5])
+    total_co2_emissions_excluding_lucf =  to_float(fields[6])
+    total_co2_emissions_excluding_lucf_per_capita = to_float(fields[7])
+    return Row(country,
+                year,
+                electricity_and_heat_co2_emissions,
+                electricity_and_heat_co2_emissions_per_capita,
+                energy_co2_emissions,
+                energy_co2_emissions_per_capita,
+                total_co2_emissions_excluding_lucf,
+                total_co2_emissions_excluding_lucf_per_capita)
+
 def read_csv_lines(filename: str) -> Optional[Node]:
-    def parse_row(fields: list[str]) -> Row:
-
-        def to_int(x: str) -> Optional[int]:
-            return None if x == "" else int(x)
-        def to_float(x: str) -> Optional[float]:
-            return None if x == "" else float(x)
-
-        country = str(fields[0])
-        year =  to_int(fields[1])
-        electricity_and_heat_co2_emissions = to_float(fields[2])
-        electricity_and_heat_co2_emissions_per_capita = to_float(fields[3])
-        energy_co2_emissions = to_float(fields[4])
-        energy_co2_emissions_per_capita = to_float(fields[5])
-        total_co2_emissions_excluding_lucf =  to_float(fields[6])
-        total_co2_emissions_excluding_lucf_per_capita = to_float(fields[7])
-        return Row(country,
-                    year,
-                    electricity_and_heat_co2_emissions,
-                    electricity_and_heat_co2_emissions_per_capita,
-                    energy_co2_emissions,
-                    energy_co2_emissions_per_capita,
-                    total_co2_emissions_excluding_lucf,
-                    total_co2_emissions_excluding_lucf_per_capita)
     with open(filename, mode='r', newline="") as file:
         reader = csv.reader(file)
         rows = list(reader)
@@ -76,11 +77,11 @@ def read_csv_lines(filename: str) -> Optional[Node]:
 
     return create_linked_list(1)
 
-def list_len(data: Optional[Node]) -> int:
+def listlen(data: Optional[Node]) -> int:
     if data is None:
         return 0
     else:
-        return 1 + list_len(data.next)
+        return 1 + listlen(data.next)
 
 def filter_rows(
     data: Optional[Node],
