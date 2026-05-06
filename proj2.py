@@ -1,6 +1,10 @@
-import csv
-from typing import Optional
+from __future__ import annotations
 import sys
+import csv
+from typing import *
+from dataclasses import dataclass
+import unittest
+import math
 sys.setrecursionlimit(10_000)
 #testing pycharm commits
 
@@ -72,4 +76,45 @@ def list_len(data: Optional[Node]) -> int:
     else:
         return 1 + list_len(data.next)
 
+def filter_rows(
+    data: Optional[Node],
+    field_name: str,
+    comparison: str,
+    value: Union[str, float, int]
+) -> Optional[Node]:
+    if data is None:
+        return None
+    if field_name == "country" and comparison != "equal":
+        return None
+
+    row = data.value
+    rest = filter_rows(data.next, field_name, comparison, value)
+    field_value = getattr(row, field_name)
+    if field_value is None:
+        return rest
+
+    if field_name == "country" and comparison == "equal":
+        if field_value == value:
+            return Node(data.value, rest)
+        else:
+            return rest
+
+
+    if comparison == "equal":
+        if field_value == value:
+            return Node(data.value, rest)
+        else:
+            return rest
+    elif comparison == "less_than":
+        if field_value < value:
+            return Node(data.value, rest)
+        else:
+            return rest
+    elif comparison == "greater_than":
+        if field_value > value:
+            return Node(data.value, rest)
+        else:
+            return rest
+    else:
+        raise Exception(f"Unknown comparison {comparison}")
 # ...
