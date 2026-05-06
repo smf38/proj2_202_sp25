@@ -28,10 +28,15 @@ class Node:
 # ...
 
 # Then your functions.
+
+#takes the values from a list of strings containing the fields of a row object, and transforms
+#them into a row, turns "" into None type
 def parse_row(fields: list[str]) -> Row:
 
+    #helper: turns a string into an int or None
     def to_int(x: str) -> Optional[int]:
         return None if x == "" else int(x)
+    #helper: turns a string into a float or none
     def to_float(x: str) -> Optional[float]:
         return None if x == "" else float(x)
 
@@ -52,11 +57,13 @@ def parse_row(fields: list[str]) -> Row:
                 total_co2_emissions_excluding_lucf,
                 total_co2_emissions_excluding_lucf_per_capita)
 
+#takes a csv file and extracts it into a linked list of Row objects
+#using multiple helper functions
 def read_csv_lines(filename: str) -> Optional[Node]:
     with open(filename, mode='r', newline="") as file:
         reader = csv.reader(file)
         rows = list(reader)
-    correct_header = ['country',
+    correct_header: list[str] = ['country',
                     'year',
                     'electricity_and_heat_co2_emissions',
                     'electricity_and_heat_co2_emissions_per_capita',
@@ -68,7 +75,7 @@ def read_csv_lines(filename: str) -> Optional[Node]:
         return None
     if rows[0] != correct_header:
         return None
-
+    #helper: zips up the rows into a linked list
     def create_linked_list(idx:int) -> Optional[Node]:
         if idx == len(rows):
             return None
@@ -77,12 +84,15 @@ def read_csv_lines(filename: str) -> Optional[Node]:
 
     return create_linked_list(1)
 
+#lists the length of a linked list recursively and returns it as an integer
 def listlen(data: Optional[Node]) -> int:
     if data is None:
         return 0
     else:
         return 1 + listlen(data.next)
 
+#filters a linked list according to a given field, comparison, and value, and returns
+#a linked list that satisfies all the filter requirements
 def filter_rows(
     data: Optional[Node],
     field_name: str,
@@ -94,8 +104,8 @@ def filter_rows(
     if field_name == "country" and comparison != "equal":
         return None
 
-    row = data.value
-    rest = filter_rows(data.next, field_name, comparison, value)
+    row: Row = data.value
+    rest: Optional[Node] = filter_rows(data.next, field_name, comparison, value)
     field_value = getattr(row, field_name)
     if field_value is None:
         return rest
