@@ -35,10 +35,10 @@ def parse_row(fields: list[str]) -> Row:
 
     #helper: turns a string into an int or None
     def to_int(x: str) -> Optional[int]:
-        return None if x == "" else int(x)
+        return None if x == "" or x ==' ' else int(x)
     #helper: turns a string into a float or none
     def to_float(x: str) -> Optional[float]:
-        return None if x == "" else float(x)
+        return None if x == "" or x ==' ' else float(x)
 
     country = str(fields[0])
     year =  to_int(fields[1])
