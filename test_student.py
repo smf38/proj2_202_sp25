@@ -17,7 +17,7 @@ class TestStudent(unittest.TestCase):
         self.assertEqual(row.year, 2000)
 
     def test_parse_row_spaces(self):
-        row = parse_row(["USA", " ", " ", " ", " ", " ", " ", " "])
+        row = parse_row(["USA", " ", " ", " ", " ", " ", "", ""])
         self.assertIsNone(row.year)
         self.assertIsNone(row.energy_co2_emissions)
 

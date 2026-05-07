@@ -106,7 +106,7 @@ def filter_rows(
 
     row: Row = data.value
     rest: Optional[Node] = filter_rows(data.next, field_name, comparison, value)
-    field_value = getattr(row, field_name)
+    field_value = getattr(row, field_name) #I looked up documentation for getattr since it is convenient
     if field_value is None:
         return rest
 
@@ -133,5 +133,5 @@ def filter_rows(
         else:
             return rest
     else:
-        raise Exception(f"Unknown comparison {comparison}")
+        raise Exception('unknown comparison type') #I just put this because pycharm was mad I didn't have 'else:'
 # ...
